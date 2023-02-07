@@ -13,7 +13,7 @@ import matplotlib.font_manager as fm
 import os
 import shutil
 from bing_image_downloader.bing_image_downloader import downloader
-#>>>>>>>>>>>>           >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>Transfer Learning by PyTorch[ing]
+#>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>Transfer Learning by PyTorch[ing]
 import torch
 import torch.nn as nn
 import torc          h.optim as optim
