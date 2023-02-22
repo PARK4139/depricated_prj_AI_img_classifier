@@ -1,6 +1,9 @@
+import traceback
+from datetime import time
+
 from moviepy.editor import *
-from pytube import Playlist, YouTube
 import sys
+from pytube import YouTube, Playlist
 
 # ____________________________________________________________________________________ 채널리스트로 다운로드[대기]
 
@@ -138,7 +141,7 @@ import sys
 # ____________________________________________________________________________________ 영상URL로 고화질 다운로드[ feat sys.argv ]
 
 fpath = lambda x: './tmp/' + x
-DOWNLOAD_FOLDER = "[TO DO]"
+DOWNLOAD_FOLDER = "`"
 
 os.chdir('..')  # 부모
 if os.path.exists(DOWNLOAD_FOLDER):
@@ -149,24 +152,39 @@ else:
     print(os.getcwd())
 
 
-def ydown(url: str, prefix: str = "프리픽스"):
+def ydown(url: str, prefix: str = "순수비디오 순수음성 "):
     yt = YouTube(url)
     vpath = (
-    yt.streams.filter(adaptive=True, file_extension="mp4", only_video=True)
-    .order_by("resolution")
-    .desc()
-    .first()
-    .download(output_path=fpath("video/"), filename_prefix=f"{prefix} ")
+        yt.streams.filter(adaptive=True, file_extension="mp4", only_video=True)
+        .order_by("resolution")
+        .desc()
+        .first()
+        .download(output_path=fpath("video/"), filename_prefix=f"{prefix} ")
     )
     apath = (
-    yt.streams.filter(adaptive=True, file_extension="mp4", only_audio=True)
-    .order_by("abr")
-    .desc()
-    .first()
-    .download(output_path=fpath("audio/"), filename_prefix=f"{prefix} ")
+        # yt.streams.filter(adaptive=True, file_extension="mp3", only_audio=True)
+        # yt.streams.filter(adaptive=True, file_extension="flac", only_audio=True)
+        yt.streams.filter(adaptive=True, file_extension="mp4", only_audio=True)
+        .order_by("abr")
+        .desc()
+        .first()
+        .download(output_path=fpath("audio/"), filename_prefix=f"{prefix} ")
     )
-    v = VideoFileClip(vpath)
-    a = AudioFileClip(apath)
+    afc = AudioFileClip(apath)
+    vfc = VideoFileClip(vpath)
+
+
+    # vfc.audio = afc
+    
+    # print(yt.streams.all())
+    # print("2"+str(yt.title)+'[DONE]')
+    # vfc.write_videofile(yt.title[0:10]+str(time)+'.mp4')
+   
+   
+    # vfc.write_videofile('tmp.mp4')
+    # os.renames('tmp.mp4',str(yt.title)+'.mp4')
+
+
 
 
 def playlistdown(url: str, prefix: str = ""):
@@ -178,11 +196,17 @@ def playlistdown(url: str, prefix: str = ""):
             print('occurs exception in playlistdown')
             continue
 
-
-
 # print(str(sys.argv[1]))
-
-
-for i in range(1,len(sys.argv)):
-    print(str(sys.argv[i]))
-    ydown(str(sys.argv[i]))
+try:
+    for i in range(1, len(sys.argv)):
+        print(str(sys.argv[i]))
+        ydown(str(sys.argv[i]) +'[TRIED_TO_DOWNLOAD]')
+except Exception as e:
+    print('______________________________________________________  error id 2023 02 18 16 28 s')
+    print('______________________________________________________  e info s')
+    print(e)
+    print('______________________________________________________  e info e')
+    print('______________________________________________________  trouble shooting info s')
+    traceback.print_exc(file=sys.stdout)
+    print('______________________________________________________  trouble shooting info e')
+    print('______________________________________________________  error id 2023 02 18 16 28 e')
